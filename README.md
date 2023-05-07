@@ -11,7 +11,7 @@
 
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
 
--   Certainly, here's a suggested roadmap for learning Laravel:
+Certainly, here's a suggested roadmap for learning Laravel:
 
 -   Basics of PHP: Before you start with Laravel, make sure you have a solid understanding of PHP. You should be familiar with basic programming concepts, such as variables, functions, control structures, and object-oriented programming.
 
