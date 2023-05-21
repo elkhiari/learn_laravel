@@ -21,6 +21,12 @@ Certainly, here's a suggested roadmap for learning Laravel:
 
 -   Routing: Learn how to create routes in Laravel. Routes are used to map URLs to controller methods.
 
+-   Migrations: learn how to create, modify, and delete database tables and their columns.
+
+-   Models: Learn how to create models in Laravel to interact with your database.
+
+-   Seeding: Learn how to create seeders and populate your database with dummy data.
+
 -   Controllers: Learn how to create controllers in Laravel. Controllers are responsible for handling requests and returning responses.
 
 -   Views: Learn how to create views in Laravel. Views are used to generate HTML output.
@@ -112,3 +118,83 @@ Route::get('/archive', function(){
 ```
 php artisan route:cache
 ```
+
+## Migrations
+
+1. In Laravel, migrations and models are key components of the database management system provided by the framework. Migrations allow you to create and modify database tables, while models provide an object-oriented interface to interact with the database tables.
+
+2. Migrations are used to create, modify, and delete database tables and their columns.
+
+3. Migrations are defined as classes and stored in the database/migrations directory of your Laravel project.
+
+4. Each migration class has two essential methods: **up()** and **down()**.
+
+* The **up()** method defines the changes you want to make to the database schema, such as creating tables or adding columns.
+
+* The **down()** method specifies how to revert those changes if needed.
+
+5. Inside the migration class, you can use various schema builder methods provided by Laravel to define the structure of your database tables.
+
+6. Once you've defined your migration, you can run it using the migrate Artisan command, which will execute all pending migrations and update the database schema accordingly.
+
+7. Laravel keeps track of which migrations have been executed, allowing you to roll back migrations using the migrate:rollback command.
+
+**Example:**
+
+* Create migration categories and products
+
+```
+docker-compose exec myapp php artisan make:migration create_categories_table
+```
+
+```
+docker-compose exec myapp php artisan make:migration create_products_table
+```
+
+* table categories :
+```
+    public function up(): void
+{
+    Schema::create('categories', function (Blueprint $table) {
+        $table->id();
+        $table->string('name');
+        $table->string('description');
+        $table->boolean('active')->default(true);
+        $table->string('reference')->unique();
+        $table->string('icon');
+        $table->timestamps();
+    });
+}
+```
+
+* table products :
+```
+    public function up(): void
+    {
+        Schema::create('products', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->string('description');
+            $table->boolean('active')->default(true);
+            $table->string('image');
+            $table->decimal('price',8,2);
+            $table->integer('stock');
+            $table->unsignedBigInteger('category_id');
+            $table->timestamps();
+            $table->foreign('category_id')->references('id')->on('categories');
+        });
+    }
+```
+**id:** Auto-incrementing primary key.
+
+**name:** String column to store the product name.
+
+**price:** Decimal column to store the product price, with 8 total digits and 2 decimal places.
+
+**active:** Boolean column to indicate if the product is active or not, defaulting to true.
+
+**category_id:** Unsigned big integer column to store the foreign key referencing the id column of the categories table.
+
+**timestamps():** Creates created_at and updated_at columns for tracking record creation and modification timestamps.
+
+The foreign key constraint is added to the category_id column, referencing the id column of the categories table.
