@@ -198,3 +198,140 @@ docker-compose exec myapp php artisan make:migration create_products_table
 **timestamps():** Creates created_at and updated_at columns for tracking record creation and modification timestamps.
 
 The foreign key constraint is added to the category_id column, referencing the id column of the categories table.
+
+
+**Example 2:**
+
+```
+
+Schema::create('class', function (Blueprint $table) {
+    $table->id();
+    $table->string('code');
+    $table->string('secteur');
+    $table->string('number_students');
+    $table->timestamps();
+ });
+
+```
+
+```
+Schema::create('students', function (Blueprint $table) {
+    $table->id();
+    $table->string('name');
+    $table->string('cnie');
+    $table->date('birth_date');
+    $table->string('profile');
+    $table->string('adress');
+    $table->string('city');
+    $table->decimal('zip_code');
+    $table->unsignedBigInteger('class_id');
+    $table->timestamps();
+    $table->foreign('class_id')->references('id')->on('class');
+});
+```
+
+
+
+## Models
+
+models are used to interact with your database tables. They represent the data and business logic of your application. Models allow you to perform database operations such as retrieving records, creating new records, updating existing records, and deleting records.
+
+1. To create a model in Laravel, you can use the php artisan command-line tool or manually create a new file. Here are the steps:
+
+        php artisan make:model `your_model`
+
+    This will create a `your_model` model file in the app directory.
+2. Manual Creation:
+
+        <?php
+
+        namespace App;
+
+        use Illuminate\Database\Eloquent\Model;
+
+        class your_model extends Model
+        {
+            // Model logic and attributes
+        }
+        
+    In the `your_model` class, you can define relationships with other models, specify table names, define guarded or fillable attributes, and add custom methods for handling specific business logic.
+
+
+**Example:**
+
+        protected $fillable = [
+                'name',
+                'cnie',
+                'birth_date',
+                'profile',
+                'adress',
+                'city',
+                'zip_code',
+                'class_id',
+            ];
+
+
+## Seeding
+
+seeders are used to populate your database with sample or test data. Seeders allow you to define data in a structured way and insert it into your database tables using the Laravel's database seeding feature.
+
+To create a seeder in Laravel, you can follow these steps:
+
+1. Generate a Seeder:
+
+    Run the following command in your terminal to generate a new seeder file:
+
+        php artisan make:seeder StudentSeeder
+
+    This command will create a new seeder file named StudentSeeder in the database/seeders directory.
+
+2. Define the Seeder Class:
+
+
+    Open the generated StudentSeeder file and define the class as follows:
+
+        <?php
+
+        namespace Database\Seeders;
+
+        use Illuminate\Database\Seeder;
+        use App\Models\Student; // Required !!!!!!!!!!!!!!!!
+
+        class StudentSeeder extends Seeder
+        {
+            public function run()
+            {
+                // Seed your database here
+            }
+        }
+
+    In the run() method, you can write the code to insert data into your database tables.
+
+3. Insert Data in the Seeder:
+
+    Within the run() method of the seeder, you can use Eloquent model methods or raw SQL queries to insert data into your tables. Here's an example of inserting a student record using the Student model:
+
+         public function run()
+        {
+            students::create([
+            'name' => 'Othmane elkhiari',
+            'cnie' => 'Q3xxxx',
+            'birth_date' => '2003-11-28',
+            'profile' => 'https://cdn.intra.42.fr/users/d1950c2fdfef811df79ec1f87f7431f5/oelkhiar.jpg',
+            'address' => '28 Lot salam',
+            'city' => 'Boujniba',
+            'zip_code' => '25100',
+            'class_id' => 1,
+            ]);
+        }
+    You can add multiple records and use loops or other logic to insert more data.
+
+4. Run the Seeder:
+
+    To execute the seeder and insert the data into your database, run the following command:
+
+        php artisan db:seed --class=StudentSeeder
+
+    This command will execute the run() method of the StudentSeeder class and populate the database with the defined data.
+
+You can create multiple seeders for different tables or specific data sets. By running the seeders, you can easily populate your database with initial or test data, making it convenient for development or testing purposes.
