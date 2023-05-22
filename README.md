@@ -324,6 +324,15 @@ To create a seeder in Laravel, you can follow these steps:
             'class_id' => 1,
             ]);
         }
+
+    Example 2 :
+
+        class_students::create([
+                'code'=>'DDOFS201',
+                'secteur'=>'Developement digital option full stack web',
+                'number_students'=>'201'
+            ]);
+        
     You can add multiple records and use loops or other logic to insert more data.
 
 4. Run the Seeder:
@@ -335,3 +344,27 @@ To create a seeder in Laravel, you can follow these steps:
     This command will execute the run() method of the StudentSeeder class and populate the database with the defined data.
 
 You can create multiple seeders for different tables or specific data sets. By running the seeders, you can easily populate your database with initial or test data, making it convenient for development or testing purposes.
+
+5. When show databases :
+
+```
+MariaDB [bitnami_myapp]> select * from class_students;
+
+
++----+----------+--------------------------------------------+-----------------+---------------------+---------------------+
+| id | code     | secteur                                    | number_students | created_at          | updated_at          |
++----+----------+--------------------------------------------+-----------------+---------------------+---------------------+
+|  1 | DDOFS201 | Developement digital option full stack web | 201             | 2023-05-22 13:09:45 | 2023-05-22 13:09:45 |
++----+----------+--------------------------------------------+-----------------+---------------------+---------------------+
+
+
+
+MariaDB [bitnami_myapp]> select * from students;
++----+------------------+--------+------------+-----------------------------------------------------------------------------+--------------+----------+----------+----------+---------------------+---------------------+
+| id | name             | cnie   | birth_date | profile                                                                     | adress       | city     | zip_code | class_id | created_at          | updated_at          |
++----+------------------+--------+------------+-----------------------------------------------------------------------------+--------------+----------+----------+----------+---------------------+---------------------+
+|  1 | Othmane elkhiari | Q3xxxx | 2003-11-28 | https://cdn.intra.42.fr/users/d1950c2fdfef811df79ec1f87f7431f5/oelkhiar.jpg | 28 Lot salam | Boujniba | 25100.00 |        1 | 2023-05-22 13:13:08 | 2023-05-22 13:13:08 |
++----+------------------+--------+------------+-----------------------------------------------------------------------------+--------------+----------+----------+----------+---------------------+---------------------+
+1 row in set (0.000 sec)
+
+```
